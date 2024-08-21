@@ -5,7 +5,7 @@
 #ifndef INDEXWORKER_P_H
 #define INDEXWORKER_P_H
 
-#include "parser/abstractpropertyparser.h"
+#include "indexcenter/parser/abstractpropertyparser.h"
 
 #include <lucene++/LuceneHeaders.h>
 

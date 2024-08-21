@@ -29,10 +29,10 @@ FILE(GLOB_RECURSE ANALYZER_SRC
 )
 
 qt5_add_dbus_adaptor(SRC_FILES ${ANALYZESERVER_XML}
-    server/analyzeserverdbus.h AnalyzeServerDBus)
+    dbusserver/analyzeserverdbus.h AnalyzeServerDBus)
 
 qt5_add_dbus_adaptor(SRC_FILES ${VectorIndex_XML}
-    server/vectorindexdbus.h VectorIndexDBus)
+    dbusserver/vectorindexdbus.h VectorIndexDBus)
 
 add_executable(${PROJECT_NAME} ${ANALYZER_SRC} ${SRC_FILES})
 

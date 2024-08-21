@@ -7,8 +7,6 @@
 #include "analyzeserveradaptor.h"
 #include "vectorindexadaptor.h"
 
-#include "modelhub/modelhubwrapper.h"
-
 #include <QDBusConnection>
 
 void AnalyzeServerDBusWorker::launchService()

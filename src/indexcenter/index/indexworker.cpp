@@ -4,9 +4,9 @@
 
 #include "indexworker.h"
 #include "private/indexworker_p.h"
-#include "parser/audiopropertyparser.h"
-#include "parser/videopropertyparser.h"
-#include "parser/imagepropertyparser.h"
+#include "indexcenter/parser/audiopropertyparser.h"
+#include "indexcenter/parser/videopropertyparser.h"
+#include "indexcenter/parser/imagepropertyparser.h"
 #include "config/configmanager.h"
 
 #include "analyzer/chineseanalyzer.h"

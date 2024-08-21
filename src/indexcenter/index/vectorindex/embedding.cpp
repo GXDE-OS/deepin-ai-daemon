@@ -4,8 +4,8 @@
 
 #include "embedding.h"
 #include "vectorindex.h"
-#include "database/embeddatabase.h"
-#include "../global_define.h"
+#include "indexcenter/database/embeddatabase.h"
+#include "indexcenter/index/index_define.h"
 #include "utils/utils.h"
 
 #include <QRegularExpression>

@@ -6,8 +6,7 @@
 #define INDEXMANAGER_H
 
 #include "indexworker.h"
-#include "index/embeddingworker.h"
-#include "modelhub/modelhubwrapper.h"
+#include "indexcenter/index/embeddingworker.h"
 
 #include <QObject>
 #include <QThread>

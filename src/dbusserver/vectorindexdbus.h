@@ -5,8 +5,8 @@
 #ifndef VECTORINDEXDBUS_H
 #define VECTORINDEXDBUS_H
 
-#include "index/embeddingworker.h"
-#include "modelhub/modelhubwrapper.h"
+#include "indexcenter/index/embeddingworker.h"
+#include "modelcenter/modelhub/modelhubwrapper.h"
 
 #include <QObject>
 #include <QDBusMessage>

@@ -3,8 +3,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include "vectorindex.h"
-#include "../global_define.h"
-#include "database/embeddatabase.h"
+#include "indexcenter/index/index_define.h"
+#include "indexcenter/database/embeddatabase.h"
 
 #include <QList>
 #include <QFile>

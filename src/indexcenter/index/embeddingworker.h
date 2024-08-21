@@ -7,7 +7,7 @@
 
 #include "vectorindex/embedding.h"
 #include "vectorindex/vectorindex.h"
-#include "global_define.h"
+#include "index_define.h"
 
 #include <QObject>
 #include <QTimer>

@@ -4,7 +4,7 @@
 
 #include "vectorindexdbus.h"
 #include "config/configmanager.h"
-#include "index/global_define.h"
+#include "indexcenter/index/index_define.h"
 
 #include <QCoreApplication>
 #include <QDebug>

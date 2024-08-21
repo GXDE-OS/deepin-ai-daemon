@@ -2,8 +2,8 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "monitor/filemonitor.h"
-#include "server/analyzeserver.h"
+#include "indexcenter/monitor/filemonitor.h"
+#include "dbusserver/analyzeserver.h"
 #include "config/configmanager.h"
 #include "utils/resourcemanager.h"
 

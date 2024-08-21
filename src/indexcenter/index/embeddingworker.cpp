@@ -5,9 +5,9 @@
 #include "private/embeddingworker_p.h"
 #include "embeddingworker.h"
 #include "config/configmanager.h"
-#include "database/embeddatabase.h"
-#include "global_define.h"
-#include "index/indexmanager.h"
+#include "indexcenter/database/embeddatabase.h"
+#include "index_define.h"
+#include "indexcenter/index/indexmanager.h"
 
 #include <QDebug>
 #include <QDir>

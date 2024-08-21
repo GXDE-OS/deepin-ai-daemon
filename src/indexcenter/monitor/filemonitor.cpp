@@ -3,10 +3,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include "filemonitor.h"
-#include "index/indexmanager.h"
+#include "indexcenter/index/indexmanager.h"
 #include "vfsgenl.h"
 #include "config/configmanager.h"
-#include "index/global_define.h"
+#include "indexcenter/index/index_define.h"
 #include "config/configmanager.h"
 
 #include <QDebug>

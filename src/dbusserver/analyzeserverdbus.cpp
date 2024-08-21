@@ -3,8 +3,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include "analyzeserverdbus.h"
-#include "modelhub/modelhubwrapper.h"
-#include "../index/indexmanager.h"
+#include "modelcenter/modelhub/modelhubwrapper.h"
+#include "indexcenter/index/indexmanager.h"
 
 #include <QProcess>
 #include <QDebug>
@@ -83,8 +83,9 @@ bool AnalyzeServerDBus::Enable()
     return out.contains("deepin-ai-models");
 }
 
-void AnalyzeServerDBus::SetSemanticOn(bool isTrue) {
-    emit semanticAnalysisChecked(isTrue, true);
+void AnalyzeServerDBus::SetSemanticOn(bool on)
+{
+    emit semanticAnalysisChecked(on, true);
 }
 
 void AnalyzeServerDBus::init()

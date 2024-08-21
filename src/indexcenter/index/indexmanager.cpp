@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include "indexmanager.h"
-#include "../config/configmanager.h"
+#include "config/configmanager.h"
 
 #include <QDebug>
 
