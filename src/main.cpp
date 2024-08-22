@@ -4,6 +4,7 @@
 
 #include "indexcenter/monitor/filemonitor.h"
 #include "dbusserver/analyzeserver.h"
+#include "dbusserver/dbusserver.h"
 #include "config/configmanager.h"
 #include "utils/resourcemanager.h"
 
@@ -15,6 +16,7 @@
 
 DWIDGET_USE_NAMESPACE
 DCORE_USE_NAMESPACE
+AIDAEMON_USE_NAMESPACE
 
 static void appExitHandler(int sig)
 {
@@ -56,6 +58,9 @@ int main(int argc, char *argv[])
 
     AnalyzeServer analyzeServer;
     analyzeServer.start();
+
+    DBusServer server;
+    server.start();
 
     ResourceManager::instance()->setAutoReleaseMemory(true);
 

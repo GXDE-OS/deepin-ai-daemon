@@ -11,6 +11,7 @@
 
 void AnalyzeServerDBusWorker::launchService()
 {
+    // todo move to DBusServer
     Q_ASSERT(QThread::currentThread() != qApp->thread());
     auto connAs { QDBusConnection::sessionBus() };
     if (!connAs.registerService("org.deepin.ai.daemon.AnalyzeServer")) {
