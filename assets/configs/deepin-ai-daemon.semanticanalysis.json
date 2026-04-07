@@ -1,0 +1,39 @@
+{
+    "magic":"dsg.config.meta",
+    "version":"1.0",
+    "contents":{
+        "EnableSemanticAnalysis": {
+            "value":false,
+            "serial":0,
+            "flags":[],
+            "name":"Enable semantic analysis",
+            "name[zh_CN]":"使能自动更新索引",
+            "description":"Enable semantic analysis",
+            "description[zh_CN]":"使能自动更新索引",
+            "permissions":"readwrite",
+            "visibility":"private"
+        },
+        "SemanticAnalysisFinished": {
+            "value":false,
+            "serial":0,
+            "flags":[],
+            "name":"Semantic analysis finished",
+            "name[zh_CN]":"是否索引完成",
+            "description":"Semantic analysis finished",
+            "description[zh_CN]":"是否索引完成",
+            "permissions":"readwrite",
+            "visibility":"private"
+        },
+        "SemanticAnalysisFinishedTimeS": {
+            "value":0,
+            "serial":0,
+            "flags":[],
+            "name":"Semantic analysis finished time(s)",
+            "name[zh_CN]":"索引完成时间戳(s)",
+            "description":"Semantic analysis finished time(s)",
+            "description[zh_CN]":"索引完成时间戳(s)",
+            "permissions":"readwrite",
+            "visibility":"private"
+        }
+    }
+}

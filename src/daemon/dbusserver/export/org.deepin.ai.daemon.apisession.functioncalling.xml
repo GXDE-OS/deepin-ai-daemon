@@ -1,0 +1,20 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+  <interface name="org.deepin.ai.daemon.Session.FunctionCalling">
+    <signal name="FunctionResult">
+      <arg name="result" type="s" direction="out"/>
+    </signal>
+    <signal name="ParseError">
+      <arg name="error" type="i" direction="out"/>
+      <arg name="message" type="s" direction="out"/>
+    </signal>
+    <method name="Terminate">
+    </method>
+    <method name="Parse">
+      <arg type="s" direction="out"/>
+      <arg name="content" type="s" direction="in"/>
+      <arg name="functions" type="s" direction="in"/>
+      <arg name="params" type="s" direction="in"/>
+    </method>
+  </interface>
+</node>

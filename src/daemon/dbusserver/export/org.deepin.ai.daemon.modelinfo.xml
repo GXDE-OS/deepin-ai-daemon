@@ -1,0 +1,42 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+  <interface name="org.deepin.ai.daemon.ModelInfo">
+    <!-- Get all supported capabilities -->
+    <method name="GetSupportedCapabilities">
+      <arg type="s" direction="out"/>
+    </method>
+    
+    <!-- Get all available models -->
+    <method name="GetAllModels">
+      <arg type="s" direction="out"/>
+    </method>
+    
+    <!-- Get models for specific capability -->
+    <method name="GetModelsForCapability">
+      <arg name="capability" type="s" direction="in"/>
+      <arg type="s" direction="out"/>
+    </method>
+    
+    <!-- Get specific model information -->
+    <method name="GetModelInfo">
+      <arg name="modelName" type="s" direction="in"/>
+      <arg type="s" direction="out"/>
+    </method>
+    
+    <!-- Get the currently selected model for a specific capability -->
+    <method name="GetCurrentModelForCapability">
+      <arg name="capability" type="s" direction="in"/>
+      <arg type="s" direction="out"/>
+    </method>
+    <!-- Get list of all available model providers -->
+    <method name="GetProviderList">
+      <arg type="as" direction="out"/>
+    </method>
+    
+    <!-- Get list of models for a specific provider -->
+    <method name="GetModelsForProvider">
+      <arg name="provider" type="s" direction="in"/>
+      <arg type="s" direction="out"/>
+    </method>
+  </interface>
+</node>

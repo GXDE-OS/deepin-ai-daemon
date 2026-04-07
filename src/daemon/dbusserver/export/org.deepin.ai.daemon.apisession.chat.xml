@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface name="org.deepin.ai.daemon.Session.Chat">
+  <method name="chat">
+    <arg direction="in" name="content" type="s"/>
+    <arg direction="in" name="params" type="s"/>
+    <arg direction="out" name="result" type="s"/>
+  </method>
+  <method name="streamChat">
+    <arg direction="in" name="content" type="s"/>
+    <arg direction="in" name="params" type="s"/>
+    <arg direction="out" name="result" type="i"/>
+  </method>
+  <method name="terminate">
+  </method>
+  <signal name="StreamOutput">
+    <arg name="text" type="s"/>
+  </signal>
+  <signal name="StreamFinished">
+    <arg name="error" type="i"/>
+    <arg name="content" type="s"/>
+  </signal>
+</interface>

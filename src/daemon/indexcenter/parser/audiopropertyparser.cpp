@@ -1,0 +1,205 @@
+// SPDX-FileCopyrightText: 2023 UnionTech Software Technology Co., Ltd.
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+
+#include "audiopropertyparser.h"
+
+#include <DTextEncoding>
+
+#include <QLoggingCategory>
+
+#include <unicode/ucnv.h>
+#include <unicode/ucsdet.h>
+#include <tag.h>
+#include <fileref.h>
+#include <taglib.h>
+#include <tpropertymap.h>
+
+Q_DECLARE_LOGGING_CATEGORY(logIndexCenter)
+
+AudioPropertyParser::AudioPropertyParser(QObject *parent)
+    : AbstractPropertyParser(parent)
+{
+    m_localeCodeMap.insert("zh_CN", "GB18030");
+}
+
+QList<AbstractPropertyParser::Property> AudioPropertyParser::properties(const QString &file)
+{
+    auto propertyList = AbstractPropertyParser::properties(file);
+    if (propertyList.isEmpty())
+        return propertyList;
+
+    AudioMetaData data;
+    if (openAudioFile(file, data)) {
+        propertyList.append({ "Album", data.album, true });
+        propertyList.append({ "Author", data.artist, true });
+        propertyList.append({ "duration", data.duration, false });
+    }
+
+    return propertyList;
+}
+
+bool AudioPropertyParser::toUtf8(const QByteArray &in, QString &out, QByteArray from)
+{
+    QByteArray byteIn = in;
+    QByteArray byteOut;
+    bool ok = Dtk::Core::DTextEncoding::convertTextEncoding(byteIn, byteOut, "utf-8", from);
+    if (ok)
+        out = QString::fromUtf8(byteOut);
+    return ok;
+}
+
+bool AudioPropertyParser::openAudioFile(const QString &file, AudioMetaData &data)
+{
+    TagLib::FileRef f(file.toLocal8Bit());
+    if (!f.file()) {
+        qCWarning(logIndexCenter) << "Failed to open audio file:" << file;
+        return false;
+    }
+
+    TagLib::Tag *tag = f.tag();
+    if (!tag) {
+        qCWarning(logIndexCenter) << "No tag found in media file:" << file;
+        return false;
+    }
+
+    characterEncodingTransform(data, static_cast<void *>(tag));
+
+    TagLib::AudioProperties *ap = f.audioProperties();
+    if (ap) {
+        auto len = ap->length() * 1000;
+        data.duration = formatTime(len);
+    }
+
+    return true;
+}
+
+void AudioPropertyParser::characterEncodingTransform(AudioPropertyParser::AudioMetaData &meta, void *obj)
+{
+    TagLib::Tag *tag = static_cast<TagLib::Tag *>(obj);
+    bool encode = true;
+    encode &= tag->title().isEmpty() ? true : tag->title().isLatin1();
+    encode &= tag->artist().isEmpty() ? true : tag->artist().isLatin1();
+    encode &= tag->album().isEmpty() ? true : tag->album().isLatin1();
+
+    QByteArray detectByte;
+    QByteArray detectCodec;
+    if (encode) {
+        if (detectCodec.isEmpty()) {
+            detectByte += tag->title().toCString();
+            detectByte += tag->artist().toCString();
+            detectByte += tag->album().toCString();
+            auto allDetectCodecs = detectEncodings(detectByte);
+            auto localeCode = m_localeCodeMap.value(QLocale::system().name());
+
+            auto iter = std::find_if(allDetectCodecs.begin(), allDetectCodecs.end(),
+                                     [localeCode](const QByteArray &curDetext) {
+                                         return (curDetext == "Big5" || curDetext == localeCode);
+                                     });
+
+            if (iter != allDetectCodecs.end())
+                detectCodec = *iter;
+
+            if (detectCodec.isEmpty())
+                detectCodec = allDetectCodecs.value(0);
+
+            QString curStr = QString::fromLocal8Bit(tag->title().toCString());
+            if (curStr.isEmpty())
+                curStr = QString::fromLocal8Bit(tag->artist().toCString());
+            if (curStr.isEmpty())
+                curStr = QString::fromLocal8Bit(tag->album().toCString());
+
+            auto ret = std::any_of(curStr.begin(), curStr.end(), [this](const QChar &ch) {
+                return isChinese(ch);
+            });
+
+            if (ret)
+                detectCodec = "GB18030";
+        }
+
+        QString detectCodecStr(detectCodec);
+        if (detectCodecStr.compare("utf-8", Qt::CaseInsensitive) == 0) {
+            meta.album = TStringToQString(tag->album());
+            meta.artist = TStringToQString(tag->artist());
+            meta.title = TStringToQString(tag->title());
+            meta.codec = "UTF-8";   //info codec
+        } else {
+            if (!toUtf8(QByteArray(tag->album().toCString(), tag->album().size()), meta.album, detectCodec))
+                meta.album = TStringToQString(tag->album());
+
+            if (!toUtf8(QByteArray(tag->artist().toCString(), tag->artist().size()), meta.artist, detectCodec))
+                meta.artist = TStringToQString(tag->artist());
+
+            if (!toUtf8(QByteArray(tag->title().toCString(), tag->title().size()), meta.title, detectCodec))
+                meta.title = TStringToQString(tag->title());
+
+            meta.codec = detectCodec;
+        }
+    } else {
+        meta.album = TStringToQString(tag->album());
+        meta.artist = TStringToQString(tag->artist());
+        meta.title = TStringToQString(tag->title());
+        meta.codec = "UTF-8";
+    }
+
+    //empty str
+    meta.album = meta.album.simplified();
+    meta.artist = meta.artist.simplified();
+    meta.title = meta.title.simplified();
+}
+
+QList<QByteArray> AudioPropertyParser::detectEncodings(const QByteArray &rawData)
+{
+    QList<QByteArray> charsets;
+    QByteArray charset = "UTF-8";
+    charsets << charset;
+
+    const char *data = rawData.data();
+    int32_t len = rawData.size();
+
+    UCharsetDetector *csd;
+    const UCharsetMatch **csm;
+    int32_t matchCount = 0;
+
+    UErrorCode status = U_ZERO_ERROR;
+
+    csd = ucsdet_open(&status);
+    if (status != U_ZERO_ERROR) {
+        qCWarning(logIndexCenter) << "Failed to open charset detector, error:" << status;
+        ucsdet_close(csd);
+        return charsets;
+    }
+
+    ucsdet_setText(csd, data, len, &status);
+    if (status != U_ZERO_ERROR) {
+        qCWarning(logIndexCenter) << "Failed to set text for charset detection, error:" << status;
+        ucsdet_close(csd);
+        return charsets;
+    }
+
+    csm = ucsdet_detectAll(csd, &matchCount, &status);
+    if (status != U_ZERO_ERROR) {
+        qCWarning(logIndexCenter) << "Failed to detect charsets, error:" << status;
+        ucsdet_close(csd);
+        return charsets;
+    }
+
+    if (matchCount > 0)
+        charsets.clear();
+
+    for (int32_t match = 0; match < matchCount; match += 1) {
+        const char *name = ucsdet_getName(csm[match], &status);
+        const char *lang = ucsdet_getLanguage(csm[match], &status);
+        if (lang == nullptr || strlen(lang) == 0)
+            lang = "**";
+        charsets << name;
+    }
+
+    ucsdet_close(csd);
+    return charsets;
+}
+
+bool AudioPropertyParser::isChinese(const QChar &c)
+{
+    return c.unicode() <= 0x9FBF && c.unicode() >= 0x4E00;
+}

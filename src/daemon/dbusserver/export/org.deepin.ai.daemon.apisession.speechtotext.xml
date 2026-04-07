@@ -1,0 +1,59 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+  <interface name="org.deepin.ai.daemon.Session.SpeechToText">
+    <!-- File-based speech recognition -->
+    <method name="recognizeFile">
+      <arg name="audioFile" type="s" direction="in"/>
+      <arg name="params" type="s" direction="in"/>
+      <arg type="s" direction="out"/>
+    </method>
+    
+    <!-- Stream-based speech recognition -->
+    <method name="startStreamRecognition">
+      <arg name="params" type="s" direction="in"/>
+      <arg type="s" direction="out"/>
+    </method>
+    
+    <method name="sendAudioData">
+      <arg name="streamSessionId" type="s" direction="in"/>
+      <arg name="audioData" type="ay" direction="in"/>
+      <arg type="b" direction="out"/>
+    </method>
+    
+    <method name="endStreamRecognition">
+      <arg name="streamSessionId" type="s" direction="in"/>
+      <arg type="s" direction="out"/>
+    </method>
+    
+    <!-- Control methods -->
+    <method name="terminate">
+    </method>
+    
+    <!-- Information methods -->
+    <method name="getSupportedFormats">
+      <arg type="as" direction="out"/>
+    </method>
+    
+    <!-- Signals for stream recognition -->
+    <signal name="RecognitionResult">
+      <arg name="streamSessionId" type="s"/>
+      <arg name="text" type="s"/>
+    </signal>
+    
+    <signal name="RecognitionPartialResult">
+      <arg name="streamSessionId" type="s"/>
+      <arg name="partialText" type="s"/>
+    </signal>
+    
+    <signal name="RecognitionError">
+      <arg name="streamSessionId" type="s"/>
+      <arg name="errorCode" type="i"/>
+      <arg name="errorMessage" type="s"/>
+    </signal>
+    
+    <signal name="RecognitionCompleted">
+      <arg name="streamSessionId" type="s"/>
+      <arg name="finalText" type="s"/>
+    </signal>
+  </interface>
+</node> 

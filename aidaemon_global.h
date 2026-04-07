@@ -1,0 +1,20 @@
+// SPDX-FileCopyrightText: 2024 UnionTech Software Technology Co., Ltd.
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+
+#ifndef AIDAEMON_GLOBAL_H
+#define AIDAEMON_GLOBAL_H
+
+#define AIDAEMON_NAMESPACE ai_daemon
+
+#define AIDAEMON_BEGIN_NAMESPACE namespace AIDAEMON_NAMESPACE {
+#define AIDAEMON_END_NAMESPACE }
+#define AIDAEMON_USE_NAMESPACE using namespace AIDAEMON_NAMESPACE;
+
+// VectorDB specific namespace macros
+#define AIDAEMON_VECTORDB_NAMESPACE vector_db
+#define AIDAEMON_VECTORDB_BEGIN_NAMESPACE namespace AIDAEMON_NAMESPACE { namespace AIDAEMON_VECTORDB_NAMESPACE {
+#define AIDAEMON_VECTORDB_END_NAMESPACE } }
+#define AIDAEMON_VECTORDB_USE_NAMESPACE using namespace AIDAEMON_NAMESPACE::AIDAEMON_VECTORDB_NAMESPACE;
+
+#endif // AIDAEMON_GLOBAL_H

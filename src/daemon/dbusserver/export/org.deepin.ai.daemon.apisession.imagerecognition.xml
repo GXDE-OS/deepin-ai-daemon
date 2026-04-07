@@ -1,0 +1,57 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+  <interface name="org.deepin.ai.daemon.Session.ImageRecognition">
+    <!-- Image recognition methods -->
+    <method name="recognizeImage">
+      <arg name="imagePath" type="s" direction="in"/>
+      <arg name="prompt" type="s" direction="in"/>
+      <arg name="params" type="s" direction="in"/>
+      <arg type="s" direction="out"/>
+    </method>
+    
+    <method name="recognizeImageData">
+      <arg name="imageData" type="ay" direction="in"/>
+      <arg name="prompt" type="s" direction="in"/>
+      <arg name="params" type="s" direction="in"/>
+      <arg type="s" direction="out"/>
+    </method>
+    
+    <method name="recognizeImageUrl">
+      <arg name="imageUrl" type="s" direction="in"/>
+      <arg name="prompt" type="s" direction="in"/>
+      <arg name="params" type="s" direction="in"/>
+      <arg type="s" direction="out"/>
+    </method>
+    
+    <!-- Control methods -->
+    <method name="terminate">
+    </method>
+    
+    <!-- Information methods -->
+    <method name="getSupportedImageFormats">
+      <arg type="as" direction="out"/>
+    </method>
+    
+    <method name="getMaxImageSize">
+      <arg type="i" direction="out"/>
+    </method>
+    
+    <!-- Signals for recognition results -->
+    <signal name="recognitionResult">
+      <arg name="sessionId" type="s"/>
+      <arg name="result" type="s"/>
+    </signal>
+    
+    <signal name="recognitionError">
+      <arg name="sessionId" type="s"/>
+      <arg name="errorCode" type="i"/>
+      <arg name="errorMessage" type="s"/>
+    </signal>
+    
+    <signal name="recognitionCompleted">
+      <arg name="sessionId" type="s"/>
+      <arg name="finalResult" type="s"/>
+    </signal>
+  </interface>
+</node>
+

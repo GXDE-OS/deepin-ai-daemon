@@ -1,0 +1,17 @@
+{
+    "magic":"dsg.config.meta",
+    "version":"1.0",
+    "contents":{
+        "Paths": {
+            "value":[],
+            "serial":0,
+            "flags":[],
+            "name":"Paths",
+            "name[zh_CN]":"目录",
+            "description":"Paths",
+            "description[zh_CN]":"目录",
+            "permissions":"readwrite",
+            "visibility":"private"
+        }
+    }
+}

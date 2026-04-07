@@ -1,0 +1,34 @@
+Source: deepin-ai-daemon
+Section: utils
+Priority: optional
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Build-Depends: debhelper (>= 9),
+ pkg-config,
+ cmake,
+ libdtkcore-dev,
+ libdtkocr-dev,
+ libtag1-dev,
+ liblucene++-dev,
+ libnl-genl-3-dev,
+ libicu-dev,
+ libboost-filesystem-dev,
+ libblas-dev,
+ liblapack-dev,
+ libdocparser-dev,
+ qt6-base-dev,
+ libdtk6core-dev,
+ libdtk6ocr-dev,
+ qt6-websockets-dev
+Standards-Version: 3.9.8
+Homepage: http://www.deepin.org/
+
+Package: deepin-ai-daemon
+Architecture: any
+Depends: 
+ ${shlibs:Depends},
+ ${misc:Depends},
+ deepin-anything-server
+Recommends:
+ libimageeditor (>=1.0.19)
+Description: AI search application server for dde-grand-search
+ AI search application server for dde-grand-search

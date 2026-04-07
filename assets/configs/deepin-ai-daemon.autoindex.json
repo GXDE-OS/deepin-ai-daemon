@@ -1,0 +1,28 @@
+{
+    "magic":"dsg.config.meta",
+    "version":"1.0",
+    "contents":{
+        "uos-ai-assistant.Status": {
+            "value":false,
+            "serial":0,
+            "flags":[],
+            "name":"Status",
+            "name[zh_CN]":"状态",
+            "description":"Status",
+            "description[zh_CN]":"状态",
+            "permissions":"readwrite",
+            "visibility":"private"
+        },
+        "SystemAssistant.Status": {
+            "value":false,
+            "serial":0,
+            "flags":[],
+            "name":"Status",
+            "name[zh_CN]":"状态",
+            "description":"Status",
+            "description[zh_CN]":"状态",
+            "permissions":"readwrite",
+            "visibility":"private"
+        }
+    }
+}

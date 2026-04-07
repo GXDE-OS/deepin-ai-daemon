@@ -1,0 +1,17 @@
+deepin-ai-daemon (1.1.31) unstable; urgency=medium
+
+  * Update version to 1.1.2.
+
+ -- Zhang Yu <zhangyub@uniontech.com>  Wed, 4 Sep 2024 10:22:20 +0800
+
+deepin-ai-daemon (1.1.1) unstable; urgency=medium
+
+  * Pre-release for deepin-ai-daemon 1.1.1
+
+ -- Zhang Yu <zhangyub@uniontech.com>  Wed, 7 Aug 2024 21:12:10 +0800
+ 
+deepin-ai-daemon (1.0) unstable; urgency=medium
+
+  * Pre-release for deepin-ai-daemon 1.0
+
+ -- Liu Zhangjian <liuzhangjian@uniontech.com>  Tue, 8 Aug 2023 16:40:00 +0800
