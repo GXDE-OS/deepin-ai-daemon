@@ -18,7 +18,7 @@ Build-Depends: debhelper (>= 9),
  qt6-base-dev,
  libdtk6core-dev,
  libdtk6ocr-dev,
- qt6-websockets-dev
+ qt6-websockets-dev,
 Standards-Version: 3.9.8
 Homepage: http://www.deepin.org/
 
